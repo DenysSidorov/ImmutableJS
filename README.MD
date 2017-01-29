@@ -1,0 +1,1 @@
+npm run build - each time for launch project
