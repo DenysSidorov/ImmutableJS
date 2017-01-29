@@ -3,11 +3,11 @@ import React from "react";
 export function Todo(props) {
     const {todo} = props;
 
-    if (todo.isDone) {
-        return <strike>{todo.text}</strike>;
+    if (todo.get('isDone')) {
+        return <strike>{todo.get('text')}</strike>;
     }
     else {
-        return <span>{todo.text}</span>;
+        return <span>{todo.get('text')}</span>;
     }
 }
 
@@ -20,7 +20,7 @@ export function TodoList(props) {
 
             <ul className='todo__list'>
                 {todos.map(todo => (
-                    <li key={ todo.id } className='todo__item'>
+                    <li key={ todo.get('id') } className='todo__item'>
                         <Todo todo={ todo }/>
                     </li>
                 ))}
