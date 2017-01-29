@@ -1,27 +1,47 @@
 import React from "react";
-
+import {List, Map} from "immutable";
 export function Todo(props) {
     const {todo} = props;
-
-    if (todo.get('isDone')) {
-        return <strike>{todo.get('text')}</strike>;
+    console.log(todo);
+    if (todo.isDone) {
+        return <strike>{todo.text}</strike>;
     }
     else {
-        return <span>{todo.get('text')}</span>;
+        return <span>{todo.text}</span>;
     }
 }
 
 export function TodoList(props) {
-    const {todos} = props;
+    const {todos, toggleTodo, addTodo} = props;
+
+    const onSubmit = (event) => {
+        const input = event.target;
+        const text = input.value;
+        const isEnterKey = (event.which == 13);
+        const isLongEnough = text.length > 0;
+
+        if (isEnterKey && isLongEnough) {
+            input.value = '';
+            addTodo(text);
+        }
+    };
+
+    const toggleClick = id => event => toggleTodo(id);
 
     return (
         <div className='todo'>
-            <input type='text' placeholder='Add todo'/>
+            <input type='text'
+                   className='todo__entry'
+                   placeholder='Добавить запись'
+                   onKeyDown={ onSubmit }/>
 
             <ul className='todo__list'>
-                {todos.map(todo => (
-                    <li key={ todo.get('id') } className='todo__item'>
-                        <Todo todo={ todo }/>
+                { todos.map(todo => (
+                    <li key={ todo.get('id') }
+                        className='todo__item'
+                        onClick={ toggleClick(todo.get('id')) }>
+
+                        <Todo todo={ todo.toJS() }/>
                     </li>
                 ))}
             </ul>
