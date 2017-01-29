@@ -1,1 +1,3 @@
-npm run build - each time for launch project
+npm install
+npm run build
+open index.html in your browser
